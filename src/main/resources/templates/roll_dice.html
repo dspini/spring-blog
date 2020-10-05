@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <title>Dice Game</title>
+        <th:block th:replace="fragments/head :: header('roll the dice')"/>
+    </head>
+    <body>
+        <th:block th:replace="partials/navbar" />
+            <h2>You guessed:<span th:text="${guess}"></span></h2>
+            <div th:if="${guess} == ${dice}">
+                <h1>you guessed correct</h1>
+                <a href="/roll-dice">play again</a>
+            </div>
+            <div th:if="${guess} != ${dice}">
+                <h2>you guessed wrong</h2>
+                <h2>the dice roll was:</h2>
+                <ul>
+                    <li><a href="/roll-dice/1">1</a></li>
+                    <li><a href="/roll-dice/2">2</a></li>
+                    <li><a href="/roll-dice/3">3</a></li>
+                    <li><a href="/roll-dice/4">4</a></li>
+                    <li><a href="/roll-dice/5">5</a></li>
+                    <li><a href="/roll-dice/6">6</a></li>
+                </ul>
+            </div>
+        <th:block th:replace="fragments/footer" />
+    </body>
+</html>
