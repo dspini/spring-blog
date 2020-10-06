@@ -6,28 +6,27 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class PostController {
 
-    @GetMapping("/posts")
+    @RequestMapping(path = "/posts", method = RequestMethod.GET)
     @ResponseBody
-    public String indexPage() {
-        return "posts/index";
+    public String showAllPosts() {
+        return "Here all the posts, my dude!";
     }
 
     @GetMapping("/posts/{id}")
     @ResponseBody
-    public String viewPost() {
-        return "posts/show";
+    public String showOnePost(@PathVariable long id) {
+        return String.format("Here is post number %d", id);
     }
 
-    @GetMapping("/posts/create")
+    @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
     @ResponseBody
-    public String viewForm() {
-        return "posts/create";
+    public String createPostForm() {
+        return "Tell me about your day!";
     }
 
-    @PostMapping("/posts/create")
+    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
     @ResponseBody
-    public String createPost() {
-        return "posts/create";
+    public String sendingCreatedPostToDB() {
+        return "Sending your diary page to be seen by everyone. :)";
     }
-
 }
