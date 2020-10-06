@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
     <head>
         <title>Dice Game</title>
-        <th:block th:replace="fragments/head :: header('roll the dice')"/>
+        <th:block th:replace="/partials/header :: header('roll the dice')"/>
     </head>
     <body>
-        <th:block th:replace="partials/navbar" />
+        <th:block th:replace="/partials/navbar" />
             <h2>You guessed:<span th:text="${guess}"></span></h2>
             <div th:if="${guess} == ${dice}">
                 <h1>you guessed correct</h1>
@@ -23,6 +23,7 @@
                     <li><a href="/roll-dice/6">6</a></li>
                 </ul>
             </div>
-        <th:block th:replace="fragments/footer" />
+        <th:block th:replace="/partials/footer" />
     </body>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </html>
