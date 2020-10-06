@@ -13,7 +13,6 @@ public class Post {
         this.title = title;
         this.body = body;
     }
-
     public long getId() {
         return id;
     }
@@ -34,5 +33,4 @@ public class Post {
     public void setBody(String body) {
         this.body = body;
     }
-
 }
