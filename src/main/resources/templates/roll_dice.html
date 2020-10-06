@@ -10,7 +10,7 @@
             <a href="/roll-dice">play again</a>
             <h2 th:unless="${guess} == ${dice}">you guessed wrong</h2>
         </div>
-            <div th:if="${guess == null}">
+        <div th:if="${guess == null}">
             <h2>your guess:</h2>
             <ul>
                 <li><a href="/roll-dice/1">1</a></li>

@@ -22,5 +22,4 @@ public class RollDiceController {
     public String rollDice(){
         return "roll_dice";
     }
-
 }
