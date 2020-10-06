@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
-    <head>
-        <title>Home</title>
-        <div th:replace="partials/partials :: header"></div>
-    </head>
-    <body>
-        <div th:replace="partials/partials :: header"></div>
-        <div th:replace="partials/partials :: navbar"></div>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link th:replace="partials/links :: links"/>
+</head>
+<body>
+<header th:replace="partials/header :: header"></header>
+<nav th:replace="partials/navbar :: navbar"></nav>
 
-        <div class="container">
+<main class="container">
+    <h1>This is the home page</h1>
+</main>
 
-            <h1>This is the home page</h1>
-
-        </div>
-
-        <div th:replace="partials/partials :: footer"></div>
-        <div th:replace="partials/partials :: scripts"></div>
-    </body>
+<footer th:replace="partials/footer :: footer"></footer>
+<div th:replace="partials/scripts :: scripts"/>
+</body>
 </html>
+
