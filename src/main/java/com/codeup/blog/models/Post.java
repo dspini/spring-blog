@@ -18,6 +18,7 @@ public class Post {
 
     public Post() {
     }
+
 @Entity
     @Table(name="ads")
     public class Ad {
@@ -31,6 +32,7 @@ public class Post {
         @Column(nullable = false)
         private String description;
     }
+
     public Post(long id, String title, String body) {
         this.id = id;
         this.title = title;
