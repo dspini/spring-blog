@@ -2,67 +2,85 @@ package com.codeup.blog.controllers;
 
 import com.codeup.blog.models.Post;
 import com.codeup.blog.repositories.PostRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.codeup.blog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class PostController {
     private final PostRepository postRepo;
-    private JpaRepository postsRepo;
 
-    public PostController(PostRepository postRepo, @Qualifier(" ") JpaRepository postsRepo) {
+    public PostController(PostRepository postRepo) {
         this.postRepo = postRepo;
-        this.postsRepo = postsRepo;
     }
 
     @RequestMapping(path = "/posts", method = RequestMethod.GET)
     public String showAllPosts(Model model) {
         model.addAttribute("posts", postRepo.findAll());
-        return "posts/index";
+        return "post/index";
     }
 
     @GetMapping("/posts/{id}")
     public String showOnePost(@PathVariable long id, Model model) {
-        Post post = postRepo.getAdById(id);
+        Post post = postRepo.getOne(id);
         model.addAttribute("post", post);
-        return "posts/show";
+        return "post/show";
     }
 
     @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
-    @ResponseBody
     public String createPostForm() {
-        return "Tell me about your day!";
+        return "post/create";
     }
 
     @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
-    @ResponseBody
-    public String sendingCreatedPostToDB() {
-        return "Sending your diary page to be seen by everyone. :)";
+    public String createPost(@RequestParam(name = "title") String title,
+                             @RequestParam(name = "body") String body,
+                             Model model) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setBody(body);
+        postRepo.save(post);
+        return "redirect:/posts/" + post.getId();
     }
 
-    @GetMapping("/posts/{id}/edit")
-    public String showEditForm(@PathVariable long id, Model model){
-        model.addAttribute("post", postsRepo.getOne(id));
-        return "posts/edit";
-    }
 
-    @PostMapping("/posts/{id}/edit")
-    public String editPost(@PathVariable long id, @ModelAttribute Post post){
-        JpaRepository usersRepo = null;
-        SecurityProperties.User user = (SecurityProperties.User) usersRepo.getOne(1L);
-        post.setAuthor(user);
-        postsRepo.save(post);
+    @GetMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable long id, Model model) {
+        Post post = postRepo.getOne(id);
+        if (post != null) {
+            postRepo.delete(post);
+        }
         return "redirect:/posts";
     }
 
-    @PostMapping("/posts/{id}/delete")
-    public String deletePost(@PathVariable long id) {
-        postsRepo.deleteById(id);
-        return "redirect:/posts";
+
+    @GetMapping("/posts/edit/{id}")
+    public String showEditPost(@PathVariable long id, Model model) {
+        Post post = postRepo.getOne(id);
+        if (post == null) {
+            return "redirect:/posts/index";
+        }
+        model.addAttribute("post", post);
+        return "post/edit";
     }
 
+
+    @PostMapping("/posts/edit")
+    public String updatePost(@RequestParam(name = "id") long id,
+                             @RequestParam(name = "title") String title,
+                             @RequestParam(name = "body") String body,
+                             Model model) {
+        Post post = postRepo.getOne(id);
+        if (post == null) {
+            return "redirect:/posts/index";
+        }
+        post.setTitle(title);
+        post.setBody(body);
+        postRepo.save(post);
+        return "redirect:/posts/" + post.getId();
+    }
 }

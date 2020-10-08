@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="fragments/head :: header('Create New Post')"/>
+    <meta charset="UTF-8">
+    <title>Create A Post</title>
+    <link th:replace="partials/links :: links"/>
 </head>
-
 <body>
-<th:block th:replace="fragments/navbar" />
+<header th:replace="partials/header :: header"></header>
+<nav th:replace="partials/navbar :: navbar"></nav>
 
-<h2>Create New Post</h2>
-<form th:method="post" th:action="@{/posts/create}" th:object="${post}">
-    <label for="title">Title</label>
-    <input type="text" th:field="*{title}"/>
-    <label for="body">Body</label>
-    <textarea th:field="*{body}"/>
-    <button>Submit</button>
-</form>
+<main class="container">
+    <form action="/posts/create" method="post">
+        <label for="title">Enter Post Title: </label> <br>
+        <input type="text" id="title" name="title"/> <br>
+        <label for="body">Enter your post: </label> <br>
+        <textarea name="body" id="body" cols="72" rows="4"></textarea> <br>
+        <button type="submit">Submit</button>
+    </form>
+</main>
 
-<th:block th:replace="partials/navbar" />
-
+<footer th:replace="partials/footer :: footer"></footer>
+<script th:replace="partials/scriptPartials :: scriptPartials"></script>
 </body>
 </html>
