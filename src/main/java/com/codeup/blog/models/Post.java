@@ -1,7 +1,5 @@
 package com.codeup.blog.models;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-
 import javax.persistence.*;
 
 @Entity
@@ -19,9 +17,6 @@ public class Post {
     private String body;
 
     public Post() {
-    }
-
-    public void setAuthor(SecurityProperties.User user) {
     }
 
     public Post(long id, String title, String body) {
