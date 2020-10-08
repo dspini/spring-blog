@@ -1,5 +1,7 @@
 package com.codeup.blog.models;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,7 +21,10 @@ public class Post {
     public Post() {
     }
 
-@Entity
+    public void setAuthor(SecurityProperties.User user) {
+    }
+
+    @Entity
     @Table(name="ads")
     public class Ad {
         @Id
