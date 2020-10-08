@@ -24,20 +24,6 @@ public class Post {
     public void setAuthor(SecurityProperties.User user) {
     }
 
-    @Entity
-    @Table(name="ads")
-    public class Ad {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private long id;
-
-        @Column(nullable = false, length = 100)
-        private String title;
-
-        @Column(nullable = false)
-        private String description;
-    }
-
     public Post(long id, String title, String body) {
         this.id = id;
         this.title = title;
