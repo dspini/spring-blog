@@ -14,10 +14,10 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/roll-dice")
-    public String showDiceForm() {
-        return "roll_dice";
-    }
+//    @GetMapping("/roll-dice")
+//    public String showDiceForm() {
+//        return "roll_dice";
+//    }
 
     @PostMapping("/roll-dice")
     public String showDiceResult(@RequestParam(name = "number") int number, Model model) {
