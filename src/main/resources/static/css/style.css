@@ -1,9 +1,10 @@
 .header {
     font-size: 5em;
     text-align: center;
-    background-color: aqua;
+    background-color: grey;
     border-color: black;
     border-style: double;
+    color: blue;
 }
 
 .footer {
@@ -12,7 +13,7 @@
     bottom: 0;
     height: 35px;
     width: 100%;
-    background-color: aqua;
+    background-color: grey;
     color: black;
     text-align: center;
 }
