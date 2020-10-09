@@ -11,6 +11,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Post findByTitle(String title);
     Post findFirstByTitle(String title);
 
-    @Query("from Post p where p.title like %:term%")
-    List<Post> searchByTitleLike(@Param("term") String term);
+//    @Query("from Post p where p.title like %:term%")
+//    List<Post> searchByTitleLike(@Param("term") String term);
 }
