@@ -12,11 +12,11 @@
 <h1>Welcome to <span th:text="${user.username}"></span>'s Profile Page</h1>
 
 <main class="container">
-    <h2>Ads by this user:</h2>
-    <show_post th:if="${user.ads}">
-        <div th:each="item : ${user.ads}">
-            <h2 th:text="${item.title}"></h2>
-            <p th:text="${item.description}"></p>
+    <h2>Posts by this user:</h2>
+    <show_post th:if="${user.posts}">
+        <div th:each="post : ${user.posts}">
+            <h2 th:text="${post.title}"></h2>
+            <p th:text="${post.description}"></p>
             <br>
         </div>
     </show_post>
