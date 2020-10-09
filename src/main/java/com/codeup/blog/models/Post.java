@@ -5,28 +5,29 @@ import javax.persistence.*;
 @Entity
 @Table(name="posts")
 public class Post {
-    @Column(nullable = false)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false, length = 100)
     private String title;
-    @Column
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User writer;
-
-    @Id
-    @GeneratedValue
-    private long id;
-
-    public Post(long id, String title, String body) {
-
-    }
-
-    public Post(String title, String body) {
-
-    }
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Post() {
+    }
+
+    public Post(long id, String title, String body, User user) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.user = user;
     }
 
     public long getId() {
@@ -53,11 +54,11 @@ public class Post {
         this.body = body;
     }
 
-    public User getAuthor() {
-        return writer;
+    public User getUser() {
+        return user;
     }
 
-    public void setAuthor(User author) {
-        this.writer = author;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
