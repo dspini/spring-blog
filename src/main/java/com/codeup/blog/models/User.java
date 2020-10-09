@@ -4,33 +4,32 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long id;
 
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @Column(nullable = false)
+    private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "writer")
     private List<Post> posts;
 
     public User() {
     }
 
-    public User(long id, String email, String username, String password, List<Post> posts) {
-        this.id = id;
-        this.email = email;
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
-        this.posts = posts;
+        this.email = email;
     }
 
     public long getId() {
@@ -39,14 +38,6 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {
@@ -65,11 +56,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Post> getPosts() {
-        return posts;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

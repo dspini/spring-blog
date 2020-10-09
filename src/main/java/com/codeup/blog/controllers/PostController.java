@@ -2,85 +2,82 @@ package com.codeup.blog.controllers;
 
 import com.codeup.blog.models.Post;
 import com.codeup.blog.repositories.PostRepository;
-import com.codeup.blog.repositories.PostRepository;
+import com.codeup.blog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class PostController {
     private final PostRepository postRepo;
+    private final UserRepository userRepo;
 
-    public PostController(PostRepository postRepo) {
-        this.postRepo = postRepo;
+    public PostController(PostRepository posts, UserRepository users) {
+
+        this.postRepo = posts;
+        this.userRepo = users;
     }
 
-    @RequestMapping(path = "/posts", method = RequestMethod.GET)
-    public String showAllPosts(Model model) {
+    @GetMapping("/posts")
+    public String showPosts(Model model){
+
         model.addAttribute("posts", postRepo.findAll());
-        return "post/index";
+        return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
-    public String showOnePost(@PathVariable long id, Model model) {
+    public String showPost(@PathVariable long id, Model model) {
         Post post = postRepo.getOne(id);
         model.addAttribute("post", post);
-        return "post/show";
+        return "posts/show";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
-    public String createPostForm() {
-        return "post/create";
+    @GetMapping("/posts/create")
+    public String showCreateForm(){
+        return "posts/create";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
-    public String createPost(@RequestParam(name = "title") String title,
-                             @RequestParam(name = "body") String body,
-                             Model model) {
+    @PostMapping("/posts/create")
+    @ResponseBody
+    public String createPost(@RequestParam String title, @RequestParam String body){
+        Post newPost = new Post();
+        newPost.setTitle(title);
+        newPost.setBody(body);
+        newPost.setAuthor(userRepo.getOne(1L));
+        postRepo.save(newPost);
+        return "new post created";
+    }
+
+    @GetMapping("/posts/{id}/edit")
+    public String editForm(@PathVariable long id, Model model) {
+        Post post = postRepo.getOne(id);
+        model.addAttribute("post", post);
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    @ResponseBody
+    public String editPost(@RequestParam String title, @RequestParam String body, @RequestParam String id) {
+        Post post = postRepo.getOne(Long.valueOf(id));
+        post.setTitle(title);
+        post.setBody(body);
+        postRepo.save(post);
+        return "post modified";
+    }
+
+    private void init() {
+
         Post post = new Post();
-        post.setTitle(title);
-        post.setBody(body);
+        post.setTitle("first post");
+        post.setBody("post body text");
+        post.setId(4L);
         postRepo.save(post);
-        return "redirect:/posts/" + post.getId();
-    }
+        Post post2 = new Post();
+        post2.setTitle("second post");
+        post2.setBody("post body text");
+        post2.setId(44L);
+        postRepo.save(post2);
 
-
-    @GetMapping("/posts/delete/{id}")
-    public String deletePost(@PathVariable long id, Model model) {
-        Post post = postRepo.getOne(id);
-        if (post != null) {
-            postRepo.delete(post);
-        }
-        return "redirect:/posts";
-    }
-
-
-    @GetMapping("/posts/edit/{id}")
-    public String showEditPost(@PathVariable long id, Model model) {
-        Post post = postRepo.getOne(id);
-        if (post == null) {
-            return "redirect:/posts/index";
-        }
-        model.addAttribute("post", post);
-        return "post/edit";
-    }
-
-
-    @PostMapping("/posts/edit")
-    public String updatePost(@RequestParam(name = "id") long id,
-                             @RequestParam(name = "title") String title,
-                             @RequestParam(name = "body") String body,
-                             Model model) {
-        Post post = postRepo.getOne(id);
-        if (post == null) {
-            return "redirect:/posts/index";
-        }
-        post.setTitle(title);
-        post.setBody(body);
-        postRepo.save(post);
-        return "redirect:/posts/" + post.getId();
     }
 }
+

@@ -5,25 +5,18 @@ import javax.persistence.*;
 @Entity
 @Table(name="posts")
 public class Post {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column
     private String body;
 
-    public Post() {
-    }
+    @ManyToOne
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private User writer;
 
-    public Post(long id, String title, String body) {
-        this.id = id;
-        this.title = title;
-        this.body = body;
-    }
+    @Id
+    @GeneratedValue
+    private long id;
 
     public long getId() {
         return id;
@@ -47,5 +40,13 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public User getAuthor() {
+        return writer;
+    }
+
+    public void setAuthor(User author) {
+        this.writer = author;
     }
 }
