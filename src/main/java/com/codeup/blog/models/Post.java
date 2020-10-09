@@ -11,12 +11,23 @@ public class Post {
     private String body;
 
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @JoinColumn(name="user_id")
     private User writer;
 
     @Id
     @GeneratedValue
     private long id;
+
+    public Post(long id, String title, String body) {
+
+    }
+
+    public Post(String title, String body) {
+
+    }
+
+    public Post() {
+    }
 
     public long getId() {
         return id;
