@@ -39,12 +39,6 @@ public class PostController {
         return "posts/create";
     }
 
-    @PostMapping("/posts/create")
-    public String submitCreatePost(@ModelAttribute Post post) {
-        postRepo.save(post);
-        return "redirect:/posts";
-    }
-
     @RequestMapping(path = "/posts/create", method = RequestMethod.POST)
     public String createPost(@RequestParam(name = "title") String title,
                              @RequestParam(name = "body") String body,
