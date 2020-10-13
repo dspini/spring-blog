@@ -16,6 +16,7 @@ class HelloController {
     @ResponseBody
     public String sayHello(@PathVariable String name) {
         return "Hello " + name + "!";
+
     }
 
 }
