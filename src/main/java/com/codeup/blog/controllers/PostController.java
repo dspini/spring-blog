@@ -32,8 +32,10 @@ public class PostController {
         return "posts/show";
     }
 
-    @RequestMapping(path = "/posts/create", method = RequestMethod.GET)
-    public String createPostForm() {
+    @GetMapping("/posts/create")
+    public String createPost(Model model) {
+        Post post = new Post();
+        model.addAttribute("post", post);
         return "posts/create";
     }
 
@@ -47,7 +49,6 @@ public class PostController {
         postRepo.save(post);
         return "redirect:/posts/" + post.getId();
     }
-
 
     @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable long id, Model model) {
@@ -93,5 +94,12 @@ public class PostController {
         post.setUser(userRepo.getOne(1L));
         postRepo.save(post);
         return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/editcreate")
+    public String editCreatePost(Model model) {
+        Post post = new Post();
+        model.addAttribute("post", post);
+        return "/posts/edit";
     }
 }
