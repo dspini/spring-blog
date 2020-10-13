@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HomeController {
@@ -16,7 +17,7 @@ public class HomeController {
 
 //    @GetMapping("/roll-dice")
 //    public String showDiceForm() {
-//        return "roll_dice";
+//        return "dice";
 //    }
 
     @PostMapping("/roll-dice")
@@ -30,7 +31,7 @@ public class HomeController {
             message += " Oh well... try again!";
         }
         model.addAttribute("message", message);
-        return "roll_dice";
+        return "dice";
     }
 
 }
