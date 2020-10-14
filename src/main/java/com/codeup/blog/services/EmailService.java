@@ -9,12 +9,21 @@ import org.springframework.mail.javamail.JavaMailSender;
 public class EmailService {
     @Autowired
     public JavaMailSender emailSender;
-    //    @Value("${spring.mail.from}")
+//    @Value("${spring.mail.from}")
 //    private String from;
-    public void prepareAndSend(Post post, String subject, String body) {
+//    public void prepareAndSendAd(Ad ad, String subject, String body) {
+//        SimpleMailMessage msg = new SimpleMailMessage();
+//       msg.setFrom(from);
+//        msg.setTo(ad.getUser().getEmail());
+//        msg.setSubject(subject);
+//        msg.setText(body);
+//        new Thread(new RunnableEmail(this, msg)).start();
+//    }
+
+    public void prepareAndSend(Post to, String subject, String body) {
         SimpleMailMessage msg = new SimpleMailMessage();
 //        msg.setFrom(from);
-        msg.setTo(post.getUser().getEmail());
+        msg.setTo(String.valueOf(to));
         msg.setSubject(subject);
         msg.setText(body);
         new Thread(new RunnableEmail(this, msg)).start();
