@@ -6,6 +6,7 @@
 //import com.codeup.blog.models.User;
 //import com.codeup.blog.repositories.AdRepository;
 //import com.codeup.blog.repositories.UserRepository;
+//import com.codeup.blog.services.EmailService;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,12 @@
 //public class AdController {
 //    private final AdRepository adRepo;
 //    private final UserRepository userRepo;
+//    private final EmailService emailService;
 //
-//    public AdController(AdRepository adRepo, UserRepository userRepo) {
+//    public AdController(AdRepository adRepo, UserRepository userRepo, EmailService emailService) {
 //        this.adRepo = adRepo;
 //        this.userRepo = userRepo;
+//        this.emailService = emailService;
 //    }
 //
 //    @RequestMapping(path = "/ads", method = RequestMethod.GET)
@@ -49,20 +52,36 @@
 //    }
 //
 //    @GetMapping("/ads/create")
-//    public String showCreateView() {
+//    public String showCreateView(Model model) {
+//        model.addAttribute("ad", new Ad());
 //        return "ads/create";
 //    }
 //
 //    @PostMapping("/ads/create")
 //    public String createAd(@ModelAttribute Ad ad) {
+//        String update;
+//        if (ad.getId() == 0) {
+//            update = "Created Ad: ";
+//            ad.setOwner(userRepo.findAll().get(0));
+//        } else {
+//            update = "Edited Ad: ";
+//            ad.setOwner(adRepo.getOne(ad.getId()).getOwner());
+//        }
 //        adRepo.save(ad);
+//        emailService.prepareAndSend(ad,
+//                update + ad.getTitle(),
+//                ad.getTitle() +"\n\n" + ad.getDescription());
 //        return "redirect:/ads/" + ad.getId();
 //    }
 //
 //    @GetMapping("/ads/delete/{id}")
-//    public String deleteAd(@PathVariable long id, Model model) {
+//    public String deleteAd(@PathVariable long id) {
 //        Ad ad = adRepo.getOne(id);
+//        ad.setOwner(adRepo.getOne(id).getOwner());
 //        adRepo.delete(ad);
+//        emailService.prepareAndSend(ad,
+//                "Deleted Ad: " + ad.getTitle(),
+//                ad.getTitle() +"\n\n" + ad.getDescription());
 //        return "redirect:/ads";
 //    }
 //
@@ -70,12 +89,6 @@
 //    public String editAd(@PathVariable long id, Model model) {
 //        Ad ad = adRepo.getOne(id);
 //        model.addAttribute("ad", ad);
-//        return "ads/edit";
-//    }
-//
-//    @PostMapping("/ads/edit")
-//    public String updateAd(@ModelAttribute Ad ad) {
-//        adRepo.save(ad);
-//        return "redirect:/ads/" + ad.getId();
+//        return "ads/create";
 //    }
 //}
