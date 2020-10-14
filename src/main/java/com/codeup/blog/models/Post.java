@@ -3,7 +3,7 @@ package com.codeup.blog.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="post")
+@Table(name="posts")
 public class Post {
 
     @Id
