@@ -20,10 +20,10 @@ public class EmailService {
 //        new Thread(new RunnableEmail(this, msg)).start();
 //    }
 
-    public void prepareAndSend(Post to, String subject, String body) {
+    public void prepareAndSend(Post toEmail, String subject, String body) {
         SimpleMailMessage msg = new SimpleMailMessage();
 //        msg.setFrom(from);
-        msg.setTo(String.valueOf(to));
+        msg.setTo(String.valueOf(toEmail));
         msg.setSubject(subject);
         msg.setText(body);
         new Thread(new RunnableEmail(this, msg)).start();

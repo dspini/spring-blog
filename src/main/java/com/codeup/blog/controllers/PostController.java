@@ -101,11 +101,11 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts/editcreate")
-    public String editCreatePost(Model model) {
-        Post post = new Post();
-        model.addAttribute("post", post);
-        return "/posts/edit";
-    }
+//    @GetMapping("/posts/editcreate")
+//    public String editCreatePost(Model model) {
+//        Post post = new Post();
+//        model.addAttribute("post", post);
+//        return "/posts/edit";
+//    }
 
 }
