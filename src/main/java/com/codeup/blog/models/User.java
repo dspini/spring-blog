@@ -22,15 +22,30 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts;
 
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+//    private List<Ad> ads;
+
     public User() {
     }
 
+//    public User(long id, String email, String username, String password, List<Ad> ads, List<Post> posts) {
     public User(long id, String email, String username, String password, List<Post> posts) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.password = password;
+//        this.ads = ads;
         this.posts = posts;
+    }
+
+
+    public User(User copy) {
+        this.id = copy.id;
+        this.email = copy.email;
+        this.username = copy.username;
+        this.password = copy.password;
+//        this.ads = copy.ads;
+        this.posts = copy.posts;
     }
 
     public long getId() {
@@ -64,6 +79,14 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+//    public List<Ad> getAds() {
+//        return ads;
+//    }
+//
+//    public void setAds(List<Ad> ads) {
+//        this.ads = ads;
+//    }
 
     public List<Post> getPosts() {
         return posts;
