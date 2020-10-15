@@ -1,6 +1,7 @@
 package com.codeup.blog.services;
 
 //import com.codeup.blog.models.Ad;
+//import com.codeup.blog.models.Ad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,13 +14,9 @@ public class EmailService {
     @Autowired
     public JavaMailSender emailSender;
 
-//    @Value("${spring.mail.from}")
-//    private String from;
-
     public void prepareAndSend(String toEmail, String subject, String body) {
-        SimpleMailMessage msg = new SimpleMailMessage();
-//        msg.setFrom(from);
-        msg.setTo(toEmail);
+        SimpleMailMessage msg = new SimpleMailMessage();;
+        msg.setTo(String.valueOf(toEmail));
         msg.setSubject(subject);
         msg.setText(body);
         new Thread(new RunnableEmail(this, msg)).start();
@@ -41,7 +38,6 @@ class RunnableEmail implements Runnable {
             emailService.emailSender.send(msg);
         }
         catch (MailException ex) {
-            // simply log it and go on...
             System.err.println(ex.getMessage());
         }
     }
