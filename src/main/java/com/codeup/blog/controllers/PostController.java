@@ -5,6 +5,7 @@ import com.codeup.blog.models.User;
 import com.codeup.blog.repositories.PostRepository;
 import com.codeup.blog.repositories.UserRepository;
 import com.codeup.blog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,17 +54,15 @@ public class PostController {
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
 
-        // Send the create email
         if (post.getId() == 0) {
-            post.setUser(userRepo.findAll().get(0)); // kluge to set a current user
+            post.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             emailService.prepareAndSend(post.getUser().getEmail(),
                     "Created Post: " + post.getTitle(),
                     post.getTitle() + "\n\n" + post.getBody());
         }
 
-        // Send email for an edit
         else {
-            post.setUser(postRepo.getPostById(post.getId()).getUser()); // Get the user from the database
+            post.setUser(postRepo.getPostById(post.getId()).getUser());
             emailService.prepareAndSend(post.getUser().getEmail(),
                     "Edited Post: " + post.getTitle(),
                     post.getTitle() + "\n\n" + post.getBody());
@@ -75,9 +74,8 @@ public class PostController {
     @GetMapping("/posts/delete/{id}")
     public String deleteAd(@PathVariable long id) {
         Post post = postRepo.getPostById(id);
-        post.setUser(postRepo.getPostById(post.getId()).getUser()); // Get the user from the database
+        post.setUser(postRepo.getPostById(post.getId()).getUser());
 
-        // send email for a post delete
         emailService.prepareAndSend(post.getUser().getEmail(),
                 "Created Post: " + post.getTitle(),
                 post.getTitle() + "\n\n" + post.getBody());
