@@ -43,12 +43,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/ads")
+                .antMatchers("/", "/ads", "/posts")
                 .permitAll()
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/ads/create", "/ads/{id}/edit")
+                .antMatchers("/ads/create", "/ads/{id}/edit", "/posts/create", "/posts/{id}/edit")
                 .authenticated();
     }
 }
