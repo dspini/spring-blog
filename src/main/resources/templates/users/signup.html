@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <title>Sign up</title>
+    <link th:replace="partials/links :: links"/>
 </head>
 <body>
+<header th:replace="partials/header :: header"></header>
 <h1>Create an account</h1>
 <form th:action="@{/sign-up}" method="POST" th:object="${user}">
     <label for="username">Username</label>
@@ -18,5 +20,7 @@
 
     <input value="Sign me up!" type="submit" />
 </form>
+<footer th:replace="partials/footer :: footer"></footer>
+<script th:replace="partials/scripts :: scriptPartials"></script>
 </body>
 </html>
